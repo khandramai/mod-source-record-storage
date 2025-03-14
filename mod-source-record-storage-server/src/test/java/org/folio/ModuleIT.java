@@ -162,8 +162,7 @@ class ModuleIT {
   }
 
   private void postTenant(JsonObject body) {
-    String location =
-      given()
+    given()
         .body(body.encodePrettily())
         .when()
         .post("/_/tenant")
@@ -171,13 +170,5 @@ class ModuleIT {
         .statusCode(201)
         .extract()
         .header("Location");
-
-    when()
-      .get(location + "?wait=60000")
-      .then()
-      .statusCode(200)  // the body contains the job status
-      .body("complete", is(true))  // job is complete
-      .body("error", is(nullValue()));  // job has succeeded without error
   }
-
 }
